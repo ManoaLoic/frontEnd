@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 export class LoginRegistryComponent implements OnInit {
 
   user = {
-    email:'',
-    password: ''
+    email:'jessica@gmail.com',
+    password: 'Jessica1234'
   };
 
   constructor(private apiService: ApiService, private router: Router) { }
