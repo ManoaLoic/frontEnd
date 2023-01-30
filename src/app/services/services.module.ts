@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ApiService {
-  base_url = 'http://localhost:3000/'
+  base_url = 'https://oval-ablaze-birth.glitch.me/'
 
   constructor(
     private http: HttpClient,

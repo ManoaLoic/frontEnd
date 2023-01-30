@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   debug: true,
-  base_url: 'http://localhost:3000/'
+  base_url: 'https://oval-ablaze-birth.glitch.me/'
 };
