@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/services.module';
 import { Router } from '@angular/router';
 
-@Component({
+@Component({ 
   selector: 'app-login-registry',
   templateUrl: './login-registry.component.html',
   styleUrls: ['./login-registry.component.scss', '../../assets/Login-assets/css/main.css', '../../assets/Login-assets/css/util.css']
