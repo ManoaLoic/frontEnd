@@ -1,0 +1,276 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-user">
+            <div class="image">
+              <img src="assets/img/damir-bosnjak.jpg" alt="...">
+            </div>
+            <div class="card-body div-detail-depot">
+                <h6>Depot details</h6>
+                <table>
+                    <tr>
+                        <td>Propriétaire</td>
+                        <td>{{userName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Voiture</td>
+                        <td>{{voiture}}</td>
+                    </tr>
+                    <tr>
+                        <td>date depot</td>
+                        <td>{{depot.date_depot | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td>date réception</td>
+                        <td>{{depot.date_remise ? (depot.date_remise | date: 'dd/MM/yyyy') : '--'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date de récupération</td>
+                        <td>{{depot.date_recuperation ? (depot.date_recuperation | date: 'dd/MM/yyyy h:m:s') : '--'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date de sortie</td>
+                        <td>{{depot.date_sortie ? (depot.date_sortie | date: 'dd/MM/yyyy') : '--'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>{{depot.status}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer">
+              <hr>
+              <div class="button-container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5>Début réparation
+                        <br>
+                        <small>{{depot.date_debut_reparation ? (depot.date_debut_reparation | date: 'dd/MM/yyyy hh:m:ss') : '--'}}</small>
+                    </h5>
+                  </div>
+                  <div class="col-md-6">
+                    <h5>Fin réparation
+                      <br>
+                      <small>{{depot.date_fin_reparation  ? (depot.date_fin_reparation | date: 'dd/MM/yyyy hh:m:ss')  : '--'}}</small>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Description</h4>
+            </div>
+            <div class="card-body">
+              {{depot.Description}} 
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Pièces justificatifs</h4>
+            </div>
+            <div class="card-body">
+                Relooking de mon véhicule stp !! 
+            </div>
+        </div>
+    
+    </div>
+    
+    <div class="col-md-8">
+
+      <ng-template [ngIf]="user.userType == '63d6e1ff6f427cc3ec7e0642'">
+        <div class="card card-user" >
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-6">
+                  <h5 class="card-title">Entrée / Sortie : </h5>  
+              </div>
+              <div class="col-md-6" style="text-align:right;">
+                <button type="submit" class="btn btn-danger btn-round" (click)="entreeSortie('sortie')" [disabled]="texteEntreeSortie != 2 || canSortie">Valider sortie</button>  
+                <button type="submit" class="btn btn-success btn-round" (click)="entreeSortie('entree')" [disabled]="texteEntreeSortie != 1">Réceptionner</button>  
+              </div>
+            </div>
+            <div style="padding : 1vh;">
+              <span *ngIf="texteEntreeSortie == 1">En attente du véhicule</span> 
+              <span *ngIf="texteEntreeSortie == 2">Le véhicule est dans le garage</span> 
+              <span *ngIf="texteEntreeSortie == 3">Le véhicule a été récupéré</span> 
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template [ngIf]="user.userType == '63d6e19a6f427cc3ec7e0640'">
+        <div class="card card-user">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-6">
+                  <h5 class="card-title">Actions : </h5>  
+              </div>
+              <div class="col-md-6" style="text-align:right;">
+                <ng-template [ngIf]="depot.status == 'Devis envoyé'">
+                  <button type="submit" class="btn btn-light btn-round" (click)="decisionClient('Annulé')">Annuler</button>  
+                  <button type="submit" class="btn btn-primary btn-round" (click)="decisionClient('En cours')">Valider</button>  
+                </ng-template>
+              </div>
+            </div>
+            <div style="padding : 1vh;">
+              <ng-template [ngIf]="depot.status == 'Devis envoyé'">
+                La liste des réparations a été rafraichi, voullez vous effectuer les réparations ? 
+              </ng-template>
+              <ng-template [ngIf]="attenteRecup">
+                Les réparations de voiture voiture ont été effectué. Veuillez renseigner la date et heure de récupération.
+                <div class="d-flex">
+                  <div class="form-group">
+                    <label>Date récupération</label>
+                    <input type="datetime-local" class="form-control" [(ngModel)]="date_recuperation">
+                  </div>
+                  <button class="btn btn-primary" style="height: 6vh;margin-top: 3vh;" (click)="renseignerDate()">Ajouter</button>
+                </div>
+              </ng-template>
+              <ng-template [ngIf]="attenteRecup2">
+                Nous vous attendons avec impatience
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+        <div class="card card-user">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-6">
+                  <h5 class="card-title">Liste réparation : </h5>  
+              </div>
+              <div class="col-md-6" style="text-align:right;">
+                <ng-template [ngIf]="user.userType == '63d6e1ff6f427cc3ec7e0642'">
+                  <button type="submit" class="btn btn-light btn-round" (click)="validerListeReparation()" [disabled]="canValidate">Valider</button>  
+                  <button *ngIf="modeEditReparation" type="submit" class="btn btn-light btn-round" (click)="annulerModifReparation()">Annuler</button>  
+                  <button *ngIf="modeEditReparation" type="submit" class="btn btn-primary btn-round" (click)="enregistrerReparation()">Enregistrer</button>  
+                  <button *ngIf="!modeEditReparation" type="submit" class="btn btn-primary btn-round" (click)="modifierReparation()" [disabled]="canAddReparation">Modifier</button>  
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <table class="table">
+            <thead class=" text-primary">
+                <th>Intitulé</th>
+                <th>Montant</th>
+                <th>Status</th>
+                <th></th>
+            </thead>
+            <tbody>
+              <tr *ngIf="modeEditReparation">
+                <td>
+                  <div class="form-group">
+                    <input class="form-control" type="text" [(ngModel)]="itemReparation.nom"/>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input class="form-control" type="number" [(ngModel)]="itemReparation.montant"/>
+                  </div>
+                </td>
+                <td></td>
+                <td>
+                  <div class="update ml-auto mr-auto">
+                    <button type="submit" class="btn btn-primary btn-round" (click)="ajouter()"><i class="nc-icon nc-simple-add"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngFor="let rep of ListeReparation; let i = index;">
+                <ng-template [ngIf]="modeEditReparation" [ngIfElse]="modeNonEditReparation">
+                  <td><input class="form-control" type="text" [(ngModel)]="rep.nom"/></td>
+                  <td><input class="form-control" type="number" [(ngModel)]="rep.montant"/></td>
+                  <td>{{rep.status}}</td>
+                  <td>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <button type="submit" class="btn btn-danger btn-round" (click)="supprimer(i)"><i class="nc-icon nc-simple-remove"></i></button>
+                      </div>
+                    </div>
+                  </td>
+                </ng-template>
+                <ng-template #modeNonEditReparation>
+                  <td>{{rep.nom}}</td>
+                  <td>{{rep.montant}}</td>
+                  <td>{{rep.status}}</td>
+                  <td>
+                    <ng-template [ngIf]="user.userType == '63d6e1ff6f427cc3ec7e0642'">
+                      <a *ngIf="rep.status != 'Fait'" href="#" (click)="$event.preventDefault();effectuerRep(i);">Fait</a>
+                      <a *ngIf="rep.status == 'Fait'">Fait</a>
+                    </ng-template>
+                  </td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card card-user">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-6">
+                  <h5 class="card-title">Factures : </h5>  
+                  <p>Net à payer : {{Facture.net_a_payer}}</p>
+                  <p>Reste à payer : {{Facture.reste}}</p>
+              </div>
+              <div class="col-md-6" style="text-align:right;">
+                <p *ngIf="!paye" style="color:red;">Status : Non-payé</p>
+                <p *ngIf="paye" style="color:green;">Status : Payé</p>
+                <p></p>
+                <ng-template [ngIf]="user.userType == '63d6e20a6f427cc3ec7e0644'">
+                  <button *ngIf="!modeEditReparation" type="submit" class="btn btn-primary btn-round" (click)="openModal(modalContent)" [disabled]="ajouterPaiement">Ajouter paiement</button>  
+                </ng-template>
+              </div>
+            </div>
+          </div>
+            <table class="table">
+              <thead class=" text-primary">
+                  <th>Date</th>
+                  <th>Montant</th>
+                  <th>Reste à payer</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let paiement of paiements; let i = index;">
+                  <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{paiement.entree}}</td>
+                  <td>{{paiement.reste}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">Pièces clients</h4>
+                    </div>
+                    <div class="card-body body-image">
+                      <img *ngFor="let img of images" src="data:image/jpeg;base64,{{img}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #modalContent let-modal>
+  <ngb-modal-backdrop aria-hidden="true" class="modal-backdrop fade show"></ngb-modal-backdrop>
+  <div class="modal-header">
+    <h4 class="modal-title">Entrer le montant du paiement : </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <input type="number" class="form-control" [(ngModel)]="montantPaiement" max="{{Facture.reste}}">
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" style="color: #51cbce;background: white;" (click)="modal.dismiss('cancel')">Annuler</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Ajouter</button>
+  </div>
+</ng-template>

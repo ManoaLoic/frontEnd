@@ -1,0 +1,114 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Chiffre d'affaires</h5>
+      <p class="card-category">
+        Statistique des chiffres d'affaire de la boite
+      </p>
+      <hr />
+      <div class="row">
+        <div class="form-group col-md-3">
+          <label for="exampleInputEmail1">Type affichage</label>
+          <select
+            class="form-control form-control-lg"
+            [(ngModel)]="filtreTypeChart"
+            (ngModelChange)="changefiltreTypeChart('chiffreAffaire')"
+          >
+            <option value="jour">Jour</option>
+            <option value="mois">Mois</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="exampleInputEmail1">Année</label>
+          <select
+            class="form-control form-control-lg"
+            [(ngModel)]="anneeChiffreAffaire"
+            (ngModelChange)="changefiltreTypeChart('chiffreAffaire')"
+          >
+            <option *ngFor="let i of range(2022, 2030)" value="{{ i }}">
+              {{ i }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div class="card-body">
+      <canvas id="chiffre-affaire-chart"></canvas>
+    </div>
+    <div class="card-footer">
+      <div class="legend">
+        <i class="fa fa-circle text-warning"></i> Chiffre d'affaires
+      </div>
+      <hr />
+      <div class="stats">
+        <i class="fa fa-calendar"></i> Affichage par : {{ filtreTypeChart }} de
+        l'année {{ anneeChiffreAffaire }}
+      </div>
+    </div>
+  </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Bénéfice</h5>
+            <p class="card-category">Last Campaign Performance</p>
+            <div class="row">
+                <div class="form-group col-md-3">
+                <label for="exampleInputEmail1">Année</label>
+                <select
+                    class="form-control form-control-lg"
+                    [(ngModel)]="anneeBenefice"
+                    (ngModelChange)="changefiltreTypeChart('benefice')"
+                >
+                    <option *ngFor="let i of range(2022, 2030)" value="{{ i }}">
+                    {{ i }}
+                    </option>
+                </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="benefice-chart"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="legend">
+                <i class="fa fa-circle text-danger"></i> Bénéfice
+                </div>
+                <hr />
+                <div class="stats">
+                <i class="fa fa-calendar"></i> Année : {{ anneeBenefice }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Temps moyen de réparation</h5>
+            <p class="card-category">Statistique par véhicule</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                <thead class="text-primary">
+                    <th>Identifiant voiture</th>
+                    <th>Marque</th>
+                    <th>Model</th>
+                    <th>Immatriculation</th>
+                    <th>Temps moyen :</th>
+                </thead>
+                <tbody class="div-depots">
+                    <tr *ngFor="let item of reparationMoyen">
+                    <td>{{ item.idVoiture }}</td>
+                    <td>{{ item.marque }}</td>
+                    <td>{{ item.model }}</td>
+                    <td>{{ item.immatriculation }}</td>
+                    <td>{{ item.moyenneFormat }}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Mes factures</h4>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class=" text-primary">
+              <th>Identifiant</th>
+              <th>voitureId</th>
+              <th>depotId</th>
+              <th>status</th>
+          </thead>
+          <tbody class="div-depots">
+            <tr *ngFor="let depot of depots" (click)="redirectToFiche(depot._id)">
+              <td>{{depot._id}}</td>
+              <td>{{depot.depot.voitureId}}</td>
+              <td>{{depot.depot._id}}</td>
+              <td>{{depot.reste == 0 ? 'Payé' : 'Non-payé'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

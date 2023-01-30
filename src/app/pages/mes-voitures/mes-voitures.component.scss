@@ -1,0 +1,25 @@
+.container-mes-voitures{
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 1vw;
+}
+
+.table-responsive{
+    height: 70vh;
+}
+
+.table-voitures{
+    tr{
+        cursor: pointer;
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: -1!important;
+}

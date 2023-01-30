@@ -1,0 +1,26 @@
+.div-detail-depot{
+    td:last-child{
+        text-align: right;
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: -1!important;
+}
+
+.body-image{
+    display: flex;
+    flex-wrap: wrap;
+    img{
+        width: 10vw;
+        height: 10vh;
+        object-fit: contain;
+    }
+
+}

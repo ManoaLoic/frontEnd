@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+          <div class="col-md-6">
+              <h5 class="card-title">Dépenses : </h5>  
+          </div>
+          <div class="col-md-6" style="text-align:right;">
+            <button type="submit" class="btn btn-primary" (click)="openModal(modalContent)">Ajouter</button>  
+          </div>
+        </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover table-voitures" >
+          <thead class=" text-primary">
+              <th>Raison</th>
+              <th>Remarque</th>
+              <th>Date</th>
+              <th>Montant</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let depense of depenses">
+              <td>{{depense.raison}}</td>
+              <td>{{depense.remarque ? depense.remarque : '--'}}</td>
+              <td>{{depense.paiements.date_paiement | date: 'dd/MM/yyyy'}}</td>
+              <td>{{depense.paiements.sortie}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+<ng-template #modalContent let-modal>
+    <ngb-modal-backdrop aria-hidden="true" class="modal-backdrop fade show"></ngb-modal-backdrop>
+    <div class="modal-header">
+      <h4 class="modal-title">Nouvelle dépense : </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Date</label>
+            <input type="date" class="form-control" [(ngModel)]="itemDepense.date_paiement">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Raison</label>
+            <select class="form-control form-control-lg" [(ngModel)]="itemDepense.raison">
+                <option value="salaire">salaire</option>
+                <option value="salaire">loyer</option>
+                <option value="salaire">achat</option>
+                <option value="autres">autres</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Montant</label>
+            <input type="number" class="form-control" [(ngModel)]="itemDepense.montant">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Remarque</label>
+            <textarea type="number" class="form-control" [(ngModel)]="itemDepense.remarque"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" style="color: #51cbce;background: white;" (click)="modal.dismiss('cancel')">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Ajouter</button>
+    </div>
+  </ng-template>
